@@ -1,4 +1,4 @@
-import type { DesignRequest } from "../../types/request";
+import type { DesignRequest, RequestStatus } from "../../types/request";
 import React, { useState } from "react";
 
 interface RequestCardProps {
@@ -6,7 +6,17 @@ interface RequestCardProps {
 }
 
 const RequestCard = ({ request }: RequestCardProps) => {
+  const statusStars: Record<RequestStatus, number> = {
+  new: 1,
+  assigned: 1,
+  "in-progress": 2,
+  submitted: 3,
+  approved: 4,
+  accepted: 4,
+  declined: 4,
+};
   const [expanded, setExpanded] = useState(false);
+  const filledStars = statusStars[request.status];
 
   return (
     <article className="rounded-3xl bg-[#1C2028] text-white p-6 shadow-lg border border-[#2D3340]">
@@ -61,12 +71,20 @@ const RequestCard = ({ request }: RequestCardProps) => {
 
       <div className="mt-8">
 
-        <div className="flex justify-between text-4xl text-yellow-400">
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-          <span>★</span>
-        </div>
+      <div className="flex justify-between text-4xl">
+        {[1, 2, 3, 4].map((star) => (
+          <span
+            key={star}
+            className={
+              star <= filledStars
+                ? "text-yellow-400"
+                : "text-gray-600"
+            }
+          >
+            ★
+          </span>
+        ))}
+      </div>
 
         <div className="flex justify-between text-xs uppercase tracking-wider text-gray-300 mt-2">
           <span>Draft</span>
@@ -108,8 +126,18 @@ const RequestCard = ({ request }: RequestCardProps) => {
           </p>
 
           <p>
+            <strong>Requested Completion Date:</strong>{" "}
+            {request.requestedCompletionDate}
+          </p>
+
+          <p>
             <strong>Check-In Deadline:</strong>{" "}
             {request.checkInDeadline ?? "Not Scheduled"}
+          </p>
+
+          <p>
+            <strong>Final Deadline:</strong>{" "}
+            {request.internalFinalDeadline ?? "Not Scheduled"}
           </p>
 
           <p>
