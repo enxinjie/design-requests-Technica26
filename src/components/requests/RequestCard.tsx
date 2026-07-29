@@ -1,6 +1,5 @@
+import { useState } from "react";
 import type { DesignRequest, RequestStatus } from "../../types/request";
-import React, { useState } from "react";
-
 interface RequestCardProps {
   request: DesignRequest;
 }
@@ -13,7 +12,7 @@ const RequestCard = ({ request }: RequestCardProps) => {
   submitted: 3,
   approved: 4,
   accepted: 4,
-  declined: 4,
+  declined: 0,
 };
   const [expanded, setExpanded] = useState(false);
   const filledStars = statusStars[request.status];
