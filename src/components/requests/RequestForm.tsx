@@ -15,6 +15,8 @@ interface FormErrors {
 const RequestForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [links, setLinks] = useState("");
+  const [references, setReferences] = useState("");
+
   const[formData, setFormData] = useState<CreateDesignRequestInput>({
     title: "",
     description: "",
@@ -60,7 +62,9 @@ const RequestForm = () => {
   function handleSubmit(form: FormEvent<HTMLFormElement>): void {
     form.preventDefault();
     if (validateForm()) {
-      const submission = {...formData, inspirationLinks: links.split("\n").map(link => link.trim()).filter(link => link !== "")};
+      var submission = {...formData, inspirationLinks: links.split("\n").map(link => link.trim()).filter(link => link !== "")};
+      submission = {...formData, referenceAssetUrls: references.split("\n").map(assests => assests.trim()).filter(assests => assests !== "")};
+
       setFormData(submission);
     }else{
 
@@ -351,17 +355,18 @@ const validateForm = (): boolean => {
 
         <div className="space-y-1">
           <label htmlFor="dimensions" className="block text-md font-medium text-gray-700"><b>Dimensions of Graphic</b> (width x height, pixel x pixel if applicable) <span className="text-red-500">*</span> </label>
-          <textarea onChange={(e) => setFormData({...formData, dimensions: e.target.value})} value={formData.dimensions} rows={1} id="dimensions" name="dimensions" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none "></textarea>
+          <textarea onChange={(e) => setFormData({...formData, dimensions: e.target.value})} value={formData.dimensions} rows={1} id="dimensions" name="dimensions" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none " required></textarea>
         </div>
 
         <div className="space-y-1">
           <label htmlFor="writtenElements" className="block text-md font-medium text-gray-700"><b>Written Elements (title, body text, dates)</b> - please give exact wording of what will go on the design</label>
-          <textarea onChange={(e) => setFormData({...formData, writtenElements: e.target.value})} value={formData.writtenElements}id="writtenElements" name="writtenElements" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"></textarea>
+          <textarea onChange={(e) => setFormData({...formData, writtenElements: e.target.value})} value={formData.writtenElements ?? ""} id="writtenElements" name="writtenElements" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"></textarea>
         </div>
 
         <div className="space-y-1">
           <label htmlFor="visualFiles" className="block text-md font-medium text-gray-700"><b>Link to Necessary Visual Elements</b> - ex. photos, specific illustrations, logos, QR codes/links (if more than 10, contact design directors)</label>
-          <input  type = "file" id="visualFiles" name="visualFiles" multiple  className="block w-full text-md text-gray-600 file:mr-4 file:rounded-lg file:border-0 file:bg-pink-50 file:px-4 file:py-2 file:text-pink-600 hover:file:bg-pink-100"></input>
+          <label className="block text-md font-medium text-gray-700"><b>Please paste one link per line</b></label>
+          <textarea onChange={(e) => setReferences(e.target.value)} value={formData.referenceAssetUrls ?? ""} id="visualFiles" name="visualFiles" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"></textarea>
         </div>
 
         <div className="space-y-1">       
