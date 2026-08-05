@@ -1,5 +1,17 @@
 import {FormEvent, useState} from "react";
-import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType} from "../../types/request";
+import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest, PersonSummary} from "../../types/request";
+
+import { db } from "../../firebase/firebase";
+
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+  setDoc
+} from "firebase/firestore";
 
 interface FormErrors {
   teams?: string;
@@ -59,16 +71,29 @@ const RequestForm = () => {
   }; 
  
 
-  function handleSubmit(form: FormEvent<HTMLFormElement>): void {
+  async function handleSubmit(form: FormEvent<HTMLFormElement>): Promise<void> {
     form.preventDefault();
-    if (validateForm()) {
-      var submission = {...formData, inspirationLinks: links.split("\n").map(link => link.trim()).filter(link => link !== "")};
-      submission = {...formData, referenceAssetUrls: references.split("\n").map(assests => assests.trim()).filter(assests => assests !== "")};
+    if (!validateForm()) {
+      return;
+    }
 
+    try{ 
+      var submission = {...formData, inspirationLinks: links.split("\n").map(link => link.trim()).filter(link => link !== ""), referenceAssetUrls: references.split("\n").map(assests => assests.trim()).filter(assests => assests !== "")};
       setFormData(submission);
-    }else{
+      const formRef = collection(db, "RequestForms");
+
+      const docRef = doc(formRef);
+      const currentUser: PersonSummary = {id: "test-user", fullName: "Test User", email: "test@example.com"};
+
+      const request: DesignRequest = {...submission, id: docRef.id, requester: currentUser, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "submitted"}
+      
+      await setDoc(docRef, request);
+
+    }catch(error){
+      console.error("Error adding document:", error);
 
     }
+   
   }
 
 const validateForm = (): boolean => {
@@ -366,7 +391,7 @@ const validateForm = (): boolean => {
         <div className="space-y-1">
           <label htmlFor="visualFiles" className="block text-md font-medium text-gray-700"><b>Link to Necessary Visual Elements</b> - ex. photos, specific illustrations, logos, QR codes/links (if more than 10, contact design directors)</label>
           <label className="block text-md font-medium text-gray-700"><b>Please paste one link per line</b></label>
-          <textarea onChange={(e) => setReferences(e.target.value)} value={formData.referenceAssetUrls ?? ""} id="visualFiles" name="visualFiles" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"></textarea>
+          <textarea onChange={(e) => setReferences(e.target.value)} value={references} id="visualFiles" name="visualFiles" className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-200"></textarea>
         </div>
 
         <div className="space-y-1">       
