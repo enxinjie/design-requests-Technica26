@@ -28,6 +28,7 @@ const RequestForm = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [links, setLinks] = useState("");
   const [references, setReferences] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const[formData, setFormData] = useState<CreateDesignRequestInput>({
     title: "",
@@ -88,6 +89,30 @@ const RequestForm = () => {
       const request: DesignRequest = {...submission, id: docRef.id, requester: currentUser, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "submitted"}
       
       await setDoc(docRef, request);
+      setSubmitSuccess(true);
+
+      setFormData({
+        title: "",
+        description: "",
+        teams: [],
+        requestedCompletionDate: "",
+        emergencyRequested: false,
+        designTypes: [],
+        otherDesignType: null,
+        desiredFileTypes: [],
+        otherFileType: null,
+        dimensions: "",
+        writtenElements: "",
+        referenceAssetUrls: [],
+        inspirationLinks: [],
+      });
+
+      setLinks("");
+      setReferences("");
+      setErrors({});
+      setTimeout(() => {
+        setSubmitSuccess(false);
+      }, 3000);
 
     }catch(error){
       console.error("Error adding document:", error);
@@ -401,7 +426,13 @@ const validateForm = (): boolean => {
         
         </div>  
 
+        {submitSuccess && (
+          <p className="mt-4 rounded-md bg-green-100 p-3 text-green-700">
+            ✅ Your design request has been submitted successfully!
+          </p>
+        )}
         <button type="submit" className="mt-4 rounded-lg bg-pink-600 px-6 py-3 font-medium text-white transition hover:bg-pink-700">Submit Request</button>
+        
 
       </form>
     </section>
