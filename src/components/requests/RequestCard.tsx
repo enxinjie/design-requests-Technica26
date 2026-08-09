@@ -1,5 +1,8 @@
 import { useState } from "react";
-import type { DesignRequest, RequestStatus } from "../../types/request";
+import type {
+  DesignRequest,
+  RequestStatus,
+} from "../../types/request";
 interface RequestCardProps {
   request: DesignRequest;
 }

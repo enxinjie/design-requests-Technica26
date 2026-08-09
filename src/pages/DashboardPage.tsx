@@ -1,15 +1,20 @@
-import RequestCard from "../components/requests/RequestCard";
+import RequestSections from "../components/requests/RequestSections";
 import { mockRequests } from "../data/mockRequests";
+import type { UserRole } from "../types/request";
 
-const DashboardPage = () => {
+interface DashboardPageProps {
+  role: UserRole;
+}
+
+const DashboardPage = ({ role }: DashboardPageProps) => {
   return (
-    <main>
+    <main className="space-y-8">
       <h1>Dashboard</h1>
-      <div>
-        {mockRequests.map((request) => (
-          <RequestCard key={request.id} request={request} />
-        ))}
-      </div>
+
+      <RequestSections
+        requests={mockRequests}
+        role={role}
+      />
     </main>
   );
 };
