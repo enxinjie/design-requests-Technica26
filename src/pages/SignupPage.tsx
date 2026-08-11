@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import type { UserData } from "../types/types";
+import type { PersonSummary } from "../types/request";
 import { Link, useNavigate } from "react-router";
  
 export default function SignUp() {
@@ -17,9 +17,13 @@ export default function SignUp() {
         email,
         password
       );
-      const defaultData: UserData = {
+      const defaultData: PersonSummary = {
+        id: userCred.user.uid,
+        fullName: "",
         email: email,
-        notes: "Use the textbox above to change me!",
+        role: "designer",
+        team: "inclusive-communities"
+
       };
       await setDoc(doc(db, "users", userCred.user.uid), defaultData);
       navigate("/");
