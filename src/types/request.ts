@@ -36,10 +36,17 @@ export type EmergencyReviewStatus =
   | "approved"
   | "declined";
 
+export type role = 
+  | "co-director"
+  | "designer"
+  | "organizer"
+
+
 export interface PersonSummary {
   id: string;
   fullName: string;
   email: string;
+  role: role;
 }
 
 // These are the fields an organizer supplies through RequestForm (matching the google form)
