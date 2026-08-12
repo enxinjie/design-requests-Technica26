@@ -84,9 +84,9 @@ export const AuthProvider = ({
       email.trim().toLowerCase();
 
     const role: UserRole =
-      team === "breach"
-        ? "organizer"
-        : "designer";
+      team === "design"
+        ? "designer"
+        : "organizer";
 
     await setPersistence(
       auth,

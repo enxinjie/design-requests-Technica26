@@ -3,6 +3,7 @@ export type UserRole = "organizer" | "co-director" | "designer";
 export type TechnicaTeam =
   | "breach"
   | "inclusive-communities"
+  | "design"
   | "events"
   | "experience"
   | "operations"
