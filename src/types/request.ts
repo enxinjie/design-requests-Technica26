@@ -3,6 +3,7 @@ export type UserRole = "organizer" | "co-director" | "designer";
 export type TechnicaTeam =
   | "breach"
   | "inclusive-communities"
+  | "design"
   | "events"
   | "experience"
   | "operations"
@@ -40,6 +41,8 @@ export interface PersonSummary {
   id: string;
   fullName: string;
   email: string;
+  role: UserRole;
+  team: TechnicaTeam;
 }
 
 // These are the fields an organizer supplies through RequestForm (matching the google form)
