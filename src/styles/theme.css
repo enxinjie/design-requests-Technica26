@@ -1,0 +1,25 @@
+:root {
+  /* Technica Colors */
+  --technica-cyan: #00ffff;
+  --technica-black: #000000;
+  --technica-lavender: #b6a1c4;
+  --technica-rose: #ff7bac;
+  --technica-white: #ffffff;
+
+  --technica-asphalt: #2d2d2d;
+  --technica-charcoal: #464343;
+
+  /* Themed Colors */
+  --technica-sand: #ffe7a3;
+  --technica-sky-blue: #75c0cd;
+  --technica-deep-blue: #2a7ec7;
+  --technica-light-navy: #444898;
+  --technica-dark-blue: #190d53;
+
+  /* Dashboard */
+  --dashboard-background: #190d53;
+  --dashboard-panel: #2d2d2d;
+  --dashboard-border: #464343;
+  --dashboard-text: #ffffff;
+  --dashboard-muted: #b6a1c4;
+}

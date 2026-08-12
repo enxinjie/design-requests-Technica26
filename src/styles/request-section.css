@@ -1,0 +1,25 @@
+.request-section {
+  margin-bottom: 2rem;
+}
+
+.request-section-title {
+  margin-bottom: 1rem;
+  color: var(--technica-white);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.request-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.request-section-empty {
+  padding: 1.5rem;
+  border: 1px dashed var(--technica-charcoal);
+  border-radius: 1rem;
+  color: var(--technica-lavender);
+  background: var(--technica-asphalt);
+  font-size: 0.9rem;
+}

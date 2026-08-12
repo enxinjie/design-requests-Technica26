@@ -1,10 +1,10 @@
-import type { DesignRequest, UserRole } from "../../types/request";
+import type { DesignRequest } from "../../types/request";
 import RequestCard from "./RequestCard";
+import "../../styles/request-section.css";
 
 interface RequestSectionProps {
   title: string;
   requests: DesignRequest[];
-  role: UserRole;
 }
 
 const RequestSection = ({
@@ -12,13 +12,14 @@ const RequestSection = ({
   requests,
 }: RequestSectionProps) => {
   return (
-    <section className="space-y-4">
-      <h2 className="text-xl font-semibold text-white">
+    <section className="request-section">
+
+      <h2 className="request-section-title">
         {title}
       </h2>
 
       {requests.length > 0 ? (
-        <div className="space-y-4">
+        <div className="request-section-list">
           {requests.map((request) => (
             <RequestCard
               key={request.id}
@@ -27,10 +28,11 @@ const RequestSection = ({
           ))}
         </div>
       ) : (
-        <p className="text-sm text-gray-400">
+        <p className="request-section-empty">
           No requests in this section.
         </p>
       )}
+
     </section>
   );
 };
