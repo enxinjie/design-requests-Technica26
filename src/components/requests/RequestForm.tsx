@@ -80,7 +80,8 @@ const RequestForm = () => {
       const formRef = collection(db, "designRequests");
 
       const docRef = doc(formRef);
-      const currentUser: PersonSummary = {id: "test-user", fullName: "Test User", email: "test@example.com", role: "co-director"};
+
+      const currentUser: PersonSummary = {id: "test-user", fullName: "Test User", email: "test@example.com", role: "designer", team: "inclusive-communities"}; // Replace with actual current user data
 
       const request: DesignRequest = {...submission, id: docRef.id, requester: currentUser, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "new"}
       
