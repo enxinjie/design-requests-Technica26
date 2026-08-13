@@ -1,11 +1,10 @@
 import RequestSections from "../components/requests/RequestSections";
 import { mockRequests } from "../data/mockRequests";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 import "../styles/theme.css";
 import "../styles/dashboard.css";
-
-const REQUEST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdCweLPRbnwhQpAAiTAZhH4gnbgfgzXOzp6rM3Rfd9NKfTR7A/viewform";
 
 const DashboardPage = () => {
     const { userProfile, loading } = useAuth();
@@ -33,14 +32,12 @@ const DashboardPage = () => {
           </p>
         </div>
 
-        <a
-          href={REQUEST_FORM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to="/requests/new"
           className="add-request-button"
         >
           + New Request
-        </a>
+        </Link>
 
       </header>
 
