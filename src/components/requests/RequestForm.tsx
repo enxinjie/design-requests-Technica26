@@ -1,5 +1,6 @@
 import {FormEvent, useState} from "react";
 import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest, PersonSummary} from "../../types/request";
+import { useAuth } from "../../context/AuthContext";
 
 import { db } from "../../firebase/firebase";
 
@@ -81,7 +82,7 @@ const RequestForm = () => {
 
       const docRef = doc(formRef);
 
-      const currentUser: PersonSummary = {id: "test-user", fullName: "Test User", email: "test@example.com", role: "designer", team: "inclusive-communities"}; // Replace with actual current user data
+      const { currentUser } = useAuth();
 
       const request: DesignRequest = {...submission, id: docRef.id, requester: currentUser, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "new"}
       
