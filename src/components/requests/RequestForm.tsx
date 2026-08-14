@@ -1,7 +1,7 @@
 import {FormEvent, useState} from "react";
-import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest, PersonSummary} from "../../types/request";
+import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest} from "../../types/request";
 import { useAuth } from "../../context/AuthContext";
-
+import { useNavigate } from "react-router";
 import { db } from "../../firebase/firebase";
 
 import {
@@ -27,6 +27,7 @@ const RequestForm = () => {
   const [links, setLinks] = useState("");
   const [references, setReferences] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const[formData, setFormData] = useState<CreateDesignRequestInput>({
     title: "",
@@ -91,6 +92,9 @@ const RequestForm = () => {
       
       await setDoc(docRef, request);
       setSubmitSuccess(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
 
       setFormData({
         title: "",
