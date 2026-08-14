@@ -5,6 +5,7 @@ import { useAuth } from "./context/AuthContext";
 import "./index.css";
 import DashboardPage from "./pages/DashboardPage";
 import { Navigate } from "react-router-dom";
+import RequestForm from "./components/requests/RequestForm";
 
 function App() {
   // from the AuthContextType object
@@ -22,6 +23,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/requests/new" element={<RequestForm />} />
       </Routes>
     </BrowserRouter>
   );
