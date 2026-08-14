@@ -22,6 +22,7 @@ interface FormErrors {
 
 
 const RequestForm = () => {
+  const { userProfile } = useAuth();
   const [errors, setErrors] = useState<FormErrors>({});
   const [links, setLinks] = useState("");
   const [references, setReferences] = useState("");
@@ -75,6 +76,10 @@ const RequestForm = () => {
       return;
     }
 
+    if (!userProfile) {
+      return;
+    }
+
     try{ 
       var submission = {...formData, inspirationLinks: links.split("\n").map(link => link.trim()).filter(link => link !== ""), referenceAssetUrls: references.split("\n").map(assests => assests.trim()).filter(assests => assests !== "")};
       setFormData(submission);
@@ -82,9 +87,7 @@ const RequestForm = () => {
 
       const docRef = doc(formRef);
 
-      const { currentUser } = useAuth();
-
-      const request: DesignRequest = {...submission, id: docRef.id, requester: currentUser, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "new"}
+      const request: DesignRequest = {...submission, id: docRef.id, requester: userProfile, createdAt: new Date().toISOString(),   assignedDesigners: [], checkInDeadline: null, internalFinalDeadline: null, emergencyReviewStatus: (submission.emergencyRequested? "awaiting-review" : "not-required") ,status: "new"}
       
       await setDoc(docRef, request);
       setSubmitSuccess(true);
