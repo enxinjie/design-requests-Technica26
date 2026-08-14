@@ -41,33 +41,36 @@ export default function SignUp() {
   };
  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-brand-50">
-      <div className="flex flex-col justify-center items-center w-xl h-100 px-6 py-12 lg:px-8 max-w-lg border-solid border-2 border-brand-100 rounded-lg bg-white">
-        <h1 className="text-ink-900">Sign Up</h1>
+   <div className="min-h-screen flex items-center justify-center bg-[#16161d]">
+      <div className="flex flex-col justify-center items-center w-xl h-100 px-6 py-12 lg:px-8 max-w-lg border-solid border-5 border-[#B6A1C4] rounded-lg bg-brand-50">
+        <h1 className="flex flex-col justify-center items-center top-25 left-98 font-mono font-bold text-3xl bg-gradient-to-r from-pink-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent"> 
+          Sign Up
+          </h1>
+          
         {error && (
           <p className="text-red-600 text-sm mt-2">{error}</p>
         )}
          <input
-          className="px-3 py-2 w-3/4 mt-5 border border-brand-100 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+          className="px-3 py-2 w-3/4 mt-5 border border-brand-51 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
           placeholder="Full Name"
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
         <input
-          className="px-3 py-2 w-3/4 mt-5 border border-brand-100 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+          className="px-3 py-2 w-3/4 mt-5 border border-brand-51 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="px-3 py-2 w-3/4 my-3 border border-brand-100 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+          className="px-3 py-2 w-3/4 my-3 border border-brand-51 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
           placeholder="Password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
          <select
-          className="px-3 py-2 w-3/4 mb-3 border border-brand-100 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
+          className="px-3 py-2 w-3/4 mb-3 border border-brand-51 rounded text-ink-900 focus:ring-2 focus:ring-brand-500 focus:outline-none"
           value={team}
           onChange={(e) => setTeam(e.target.value as TechnicaTeam)}
         >
@@ -78,8 +81,8 @@ export default function SignUp() {
           ))}
         </select>
         <button
-          className="bg-brand-500 hover:bg-brand-600 text-white font-bold py-2 px-4 rounded-md cursor-pointer"
-          onClick={handleAuth}
+          className="bg-brand-500 hover:bg-[#2A7EC7] text-white font-bold py-2 px-4 rounded-md cursor-pointer"
+          onClick={handleAuth} 
         >
           Sign Up
         </button>
