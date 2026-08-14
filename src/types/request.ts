@@ -37,12 +37,6 @@ export type EmergencyReviewStatus =
   | "approved"
   | "declined";
 
-export type role = 
-  | "co-director"
-  | "designer"
-  | "organizer"
-
- 
 export interface PersonSummary {
   id: string;
   fullName: string;
