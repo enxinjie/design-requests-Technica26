@@ -38,6 +38,13 @@ const DashboardPage = () => {
         >
           + New Request
         </Link>
+        
+        <Link
+          to="/login"
+          className="add-logout-button"
+        >
+          Log Out
+        </Link>
 
       </header>
 

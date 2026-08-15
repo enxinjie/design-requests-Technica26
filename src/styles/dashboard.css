@@ -46,6 +46,29 @@
   transform: translateY(-1px);
 }
 
+.add-logout-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--technica-white);
+  color: var(--technica-rose);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.add-logout-button:hover {
+  opacity: 0.8;
+  background: var(--technica-rose);
+  color: var(--technica-white);
+  transform: translateY(-1px);
+}
+
 /* Main request area */
 .dashboard-requests {
   width: 100%;
