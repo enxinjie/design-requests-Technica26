@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest, PersonSummary} from "../../types/request";
+import {CreateDesignRequestInput, TechnicaTeam, DesignType, DeliveryFileType, DesignRequest} from "../../types/request";
 import { useAuth } from "../../context/AuthContext";
 
 import { db } from "../../firebase/firebase";

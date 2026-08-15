@@ -1,21 +1,51 @@
 import RequestSections from "../components/requests/RequestSections";
-import { mockRequests } from "../data/mockRequests";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import type { DesignRequest } from "../types/request";
+import { useEffect, useState } from "react";
 
 import "../styles/theme.css";
 import "../styles/dashboard.css";
 
 const DashboardPage = () => {
-    const { userProfile, loading } = useAuth();
+  const { userProfile, loading } = useAuth();
 
-  if (loading) {
+  const [requests, setRequests] = useState<DesignRequest[]>([]);
+  const [requestsLoading, setRequestsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const snapshot = await getDocs(
+          collection(db, "designRequests")
+        );
+
+        const fetchedRequests = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as DesignRequest[];
+
+        setRequests(fetchedRequests);
+      } catch (error) {
+        console.error("Could not load design requests:", error);
+      } finally {
+        setRequestsLoading(false);
+      }
+    };
+
+    fetchRequests();
+  }, []);
+
+  if (loading || requestsLoading) {
     return <p>Loading...</p>;
   }
 
   if (!userProfile) {
     return <p>Unable to load user profile.</p>;
   }
+
   return (
     <main className="dashboard">
 
@@ -44,7 +74,7 @@ const DashboardPage = () => {
       {/* Requests */}
       <div className="dashboard-requests">
         <RequestSections
-          requests={mockRequests}
+          requests={requests}
           role={userProfile.role}
         />
       </div>
