@@ -11,7 +11,7 @@ import "../styles/theme.css";
 import "../styles/dashboard.css";
 
 const DashboardPage = () => {
-    const { userProfile, loading, logOut } = useAuth();
+    const { userProfile, loading  } = useAuth();
     const navigate = useNavigate();
 
   const [requests, setRequests] = useState<DesignRequest[]>([]);
@@ -48,10 +48,6 @@ const DashboardPage = () => {
     return <p>Unable to load user profile.</p>;
   }
 
-  const handleLogOut = async () => {
-    await logOut();
-    navigate("/login");
-  };
   
   return (
     <main className="dashboard">
@@ -75,14 +71,6 @@ const DashboardPage = () => {
         >
           + New Request
         </Link>
-        
-        <button
-          onClick={handleLogOut}
-          className="add-logout-button"
-        >
-          Log Out
-        </button>
-
       </header>
 
       {/* Requests */}
