@@ -1,7 +1,10 @@
 import RequestSections from "../components/requests/RequestSections";
-import { mockRequests } from "../data/mockRequests";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import type { DesignRequest } from "../types/request";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/theme.css";
@@ -11,7 +14,33 @@ const DashboardPage = () => {
     const { userProfile, loading, logOut } = useAuth();
     const navigate = useNavigate();
 
-  if (loading) {
+  const [requests, setRequests] = useState<DesignRequest[]>([]);
+  const [requestsLoading, setRequestsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const snapshot = await getDocs(
+          collection(db, "designRequests")
+        );
+
+        const fetchedRequests = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as DesignRequest[];
+
+        setRequests(fetchedRequests);
+      } catch (error) {
+        console.error("Could not load design requests:", error);
+      } finally {
+        setRequestsLoading(false);
+      }
+    };
+
+    fetchRequests();
+  }, []);
+
+  if (loading || requestsLoading) {
     return <p>Loading...</p>;
   }
 
@@ -59,7 +88,7 @@ const DashboardPage = () => {
       {/* Requests */}
       <div className="dashboard-requests">
         <RequestSections
-          requests={mockRequests}
+          requests={requests}
           role={userProfile.role}
         />
       </div>

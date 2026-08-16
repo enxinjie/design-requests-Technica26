@@ -3,6 +3,7 @@ import type {
   UserRole,
 } from "../../types/request";
 import RequestSection from "./RequestSection";
+import { useAuth } from "../../context/AuthContext";
 
 interface RequestSectionsProps {
   requests: DesignRequest[];
@@ -13,23 +14,22 @@ const RequestSections = ({
   requests,
   role,
 }: RequestSectionsProps) => {
+  const { userProfile } = useAuth();
 
+  // CO-DIRECTOR
   if (role === "co-director") {
+    const requestsAwaitingAssignment = requests.filter(
+      (request) =>
+        request.assignedDesigners.length === 0
+    );
 
-    const requestsAwaitingAssignment =
-      requests.filter(
-        (request) =>
-          request.assignedDesigners.length === 0
-      );
-
-    const assignedRequests =
-      requests.filter(
-        (request) =>
-          request.assignedDesigners.length > 0
-      );
+    const assignedRequests = requests.filter(
+      (request) =>
+        request.assignedDesigners.length > 0
+    );
 
     return (
-      <div>
+      <div className="space-y-8">
         <RequestSection
           title="Requests Awaiting Assignment"
           requests={requestsAwaitingAssignment}
@@ -43,9 +43,9 @@ const RequestSections = ({
     );
   }
 
+  // ORGANIZER
   if (role === "organizer") {
-
-    return (
+   return (
       <RequestSection
         title="My Requests"
         requests={requests}
@@ -53,13 +53,39 @@ const RequestSections = ({
     );
   }
 
+  // DESIGNER + filtering
   if (role === "designer") {
+    const assignedRequests = userProfile
+      ? requests.filter((request) =>
+          request.assignedDesigners.some(
+            (designer) =>
+              designer.id === userProfile.id
+          )
+        )
+      : [];
+
+    const otherRequests = userProfile
+      ? requests.filter(
+          (request) =>
+            !request.assignedDesigners.some(
+              (designer) =>
+                designer.id === userProfile.id
+            )
+        )
+      : [];
 
     return (
-      <RequestSection
-        title="Assigned Requests"
-        requests={requests}
-      />
+      <div className="space-y-8">
+        <RequestSection
+          title="My Assigned Requests"
+          requests={assignedRequests}
+        />
+
+        <RequestSection
+          title="Other Requests"
+          requests={otherRequests}
+        />
+      </div>
     );
   }
 
