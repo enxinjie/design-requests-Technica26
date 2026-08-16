@@ -10,7 +10,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed left-0 top-0 h-screen border-r bg-white transition-all duration-300 `}>
+            className={`fixed left-0 top-0 h-screen border-r bg-white transition-all duration-300 w-64`}>
                 <div className="flex items-center justify-between p-3">
                     <h1 className="text-xl font-bold">GraphixHub</h1>
                     <button onClick={() => setCollapsed(true)} className="rounded-lg p-2 hover:bg-gray-100">☰</button>
