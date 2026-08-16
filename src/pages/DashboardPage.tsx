@@ -5,12 +5,14 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import type { DesignRequest } from "../types/request";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/theme.css";
 import "../styles/dashboard.css";
 
 const DashboardPage = () => {
-  const { userProfile, loading } = useAuth();
+    const { userProfile, loading, logOut } = useAuth();
+    const navigate = useNavigate();
 
   const [requests, setRequests] = useState<DesignRequest[]>([]);
   const [requestsLoading, setRequestsLoading] = useState(true);
@@ -46,6 +48,11 @@ const DashboardPage = () => {
     return <p>Unable to load user profile.</p>;
   }
 
+  const handleLogOut = async () => {
+    await logOut();
+    navigate("/login");
+  };
+  
   return (
     <main className="dashboard">
 
@@ -68,6 +75,13 @@ const DashboardPage = () => {
         >
           + New Request
         </Link>
+        
+        <button
+          onClick={handleLogOut}
+          className="add-logout-button"
+        >
+          Log Out
+        </button>
 
       </header>
 
