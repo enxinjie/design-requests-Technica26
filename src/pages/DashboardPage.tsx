@@ -2,12 +2,14 @@ import RequestSections from "../components/requests/RequestSections";
 import { mockRequests } from "../data/mockRequests";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "../styles/theme.css";
 import "../styles/dashboard.css";
 
 const DashboardPage = () => {
-    const { userProfile, loading } = useAuth();
+    const { userProfile, loading, logOut } = useAuth();
+    const navigate = useNavigate();
 
   if (loading) {
     return <p>Loading...</p>;
@@ -16,6 +18,12 @@ const DashboardPage = () => {
   if (!userProfile) {
     return <p>Unable to load user profile.</p>;
   }
+
+  const handleLogOut = async () => {
+    await logOut();
+    navigate("/login");
+  };
+  
   return (
     <main className="dashboard">
 
@@ -38,6 +46,13 @@ const DashboardPage = () => {
         >
           + New Request
         </Link>
+        
+        <button
+          onClick={handleLogOut}
+          className="add-logout-button"
+        >
+          Log Out
+        </button>
 
       </header>
 
